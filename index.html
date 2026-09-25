@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10100f">
+  <meta name="description" content="Official page for Young Kelly 999. Lowkey. Working.">
+  <title>Young Kelly 999 | Official</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #10100f;
+      --panel: #191917;
+      --paper: #f5f1e9;
+      --muted: #aaa59b;
+      --orange: #f2a13a;
+      --lime: #d7ff63;
+      --blue: #68d5e8;
+      --line: rgba(245, 241, 233, .16);
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background-color: var(--night);
+      background-image: repeating-linear-gradient(135deg, transparent 0 52px, rgba(245, 241, 233, .018) 53px 54px);
+      color: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    a { color: inherit; }
+    .page {
+      width: min(100% - 36px, 1040px);
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      animation: arrive .7s both;
+    }
+    .monogram { font-weight: 800; }
+    .monogram span { color: var(--orange); }
+    .availability { color: var(--muted); }
+    .availability::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 9px;
+      border-radius: 50%;
+      background: var(--orange);
+      vertical-align: 1px;
+    }
+    .availability::before { animation: signal 1.5s ease-in-out infinite; }
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+      align-items: center;
+      gap: clamp(32px, 8vw, 100px);
+      padding: 64px 0;
+    }
+    .eyebrow {
+      margin: 0 0 20px;
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      animation: arrive .7s .1s both;
+    }
+    h1 {
+      max-width: 620px;
+      margin: 0;
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: .92;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+      animation: arrive .75s .18s both;
+    }
+    h1 span { color: var(--orange); text-shadow: 5px 5px 0 rgba(104, 213, 232, .2); }
+    .tagline {
+      margin: 24px 0 30px;
+      color: #d0cbc2;
+      font-size: clamp(17px, 2vw, 20px);
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .actions { animation: arrive .7s .3s both; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border: 1px solid var(--paper);
+      background: var(--paper);
+      color: var(--night);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .button:hover { border-color: var(--orange); background: var(--orange); }
+    .button:focus-visible, .socials a:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+    .button.secondary { border-color: var(--line); background: transparent; color: var(--paper); }
+    .button.secondary:hover { border-color: var(--orange); color: var(--orange); }
+    .portrait-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 390px;
+      justify-self: end;
+      aspect-ratio: 4 / 5;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      animation: portrait-in .9s .18s both;
+      box-shadow: 14px 14px 0 rgba(242, 161, 58, .12), -14px -14px 0 rgba(104, 213, 232, .08);
+    }
+    .portrait-wrap::after {
+      position: absolute;
+      z-index: 0;
+      inset: 12px -12px -12px 12px;
+      border: 2px solid rgba(215, 255, 99, .7);
+      content: "";
+      pointer-events: none;
+    }
+    .portrait, .portrait-fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .portrait { z-index: 1; display: block; object-fit: cover; object-position: center; }
+    .portrait-fallback {
+      display: grid;
+      place-content: center;
+      padding: 24px;
+      color: var(--muted);
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 35%, #39342c, #191917 70%);
+    }
+    .portrait-fallback strong { display: block; color: var(--paper); font-size: 38px; letter-spacing: .08em; }
+    .portrait-fallback span { margin-top: 12px; font-size: 12px; }
+    .portrait[hidden] { display: none; }
+    .portrait-caption {
+      position: absolute;
+      z-index: 2;
+      right: 14px;
+      bottom: 14px;
+      left: 14px;
+      padding: 12px 14px;
+      background: rgba(16, 16, 15, .82);
+      color: var(--paper);
+      font-size: 11px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .now-playing {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      animation: arrive .7s .4s both;
+    }
+    .equalizer { height: 19px; display: flex; align-items: center; gap: 3px; }
+    .equalizer i { width: 3px; height: 6px; background: var(--lime); animation: beat .7s ease-in-out infinite alternate; }
+    .equalizer i:nth-child(2) { height: 15px; animation-delay: -.5s; }
+    .equalizer i:nth-child(3) { height: 10px; animation-delay: -.25s; }
+    .equalizer i:nth-child(4) { height: 17px; animation-delay: -.4s; }
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--lime);
+      color: var(--night);
+      transform: rotate(-1deg) scale(1.02);
+    }
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      gap: 28px;
+      padding: 12px 0;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      animation: ticker 24s linear infinite;
+    }
+    .ticker-track span::after { content: "✳"; margin-left: 28px; color: #e36c28; }
+    .sound-section {
+      margin: 28px 0 34px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(115deg, rgba(242, 161, 58, .1), rgba(104, 213, 232, .06) 55%, rgba(215, 255, 99, .04));
+    }
+    .sound-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .sound-heading h2 { margin: 0; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; }
+    .sound-heading a { color: var(--lime); font-size: 12px; text-decoration: none; }
+    .sound-heading a:hover { color: var(--orange); }
+    .sound-player { display: block; width: 100%; height: 166px; border: 0; background: #191917; }
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 0 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .socials { display: flex; flex-wrap: wrap; gap: 22px; }
+    .socials a { color: var(--paper); text-decoration: none; }
+    .socials a:hover { color: var(--orange); }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 32px, 480px); }
+      header { min-height: 64px; }
+      main { grid-template-columns: 1fr; gap: 38px; padding: 54px 0 46px; }
+      h1 { font-size: clamp(46px, 15vw, 72px); }
+      .portrait-wrap { width: min(78%, 330px); justify-self: center; }
+      footer { flex-direction: column; }
+      .now-playing { margin-top: 28px; }
+      .sound-section { margin-top: 20px; padding: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+    @keyframes arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes portrait-in { from { opacity: 0; transform: translateX(18px) rotate(2deg); } to { opacity: 1; transform: translateX(0) rotate(0); } }
+    @keyframes beat { to { height: 4px; } }
+    @keyframes signal { 50% { box-shadow: 0 0 0 5px rgba(242, 161, 58, .16); } }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="monogram"><span>[</span> YK999 <span>]</span></div>
+      <div class="availability">Independent artist</div>
+    </header>
+    <main>
+      <section aria-labelledby="artist-name">
+        <p class="eyebrow">Lowkey. Working.</p>
+        <h1 id="artist-name">Young<br>Kelly <span>999</span></h1>
+        <p class="tagline">New sound. Same focus.</p>
+        <div class="actions">
+          <a class="button" href="https://www.instagram.com/youngkellyy.music/" target="_blank" rel="noreferrer">Listen to my songs <span aria-hidden="true">&nbsp;↗</span></a>
+          <a class="button secondary" href="https://wa.me/2347088554786" target="_blank" rel="noreferrer">WhatsApp</a>
+        </div>
+        <div class="now-playing"><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Independent sound · Lagos to the world</div>
+      </section>
+      <div class="portrait-wrap">
+        <div class="portrait-fallback" id="portraitFallback"><strong>YK 999</strong><span>Add your durag photo as durag.jpg</span></div>
+        <img class="portrait" src="durag.jpg" alt="Young Kelly wearing a durag" onerror="this.hidden=true" onload="document.getElementById('portraitFallback').hidden=true">
+        <div class="portrait-caption">Young Kelly 999 · Official</div>
+      </div>
+    </main>
+    <section class="sound-section" aria-labelledby="sound-title">
+      <div class="sound-heading">
+        <h2 id="sound-title">Play Young Kelly 999</h2>
+        <a href="https://soundcloud.com/kelvin-ngaji" target="_blank" rel="noreferrer">Open SoundCloud ↗</a>
+      </div>
+      <iframe class="sound-player" title="Young Kelly 999 SoundCloud player" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/kelvin-ngaji&color=%23f2a13a&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+    </section>
+    <div class="ticker" aria-label="Young Kelly 999, new wave, independent sound">
+      <div class="ticker-track" aria-hidden="true">
+        <span>Young Kelly 999</span><span>New wave</span><span>Lowkey. Working.</span><span>Independent sound</span>
+        <span>Young Kelly 999</span><span>New wave</span><span>Lowkey. Working.</span><span>Independent sound</span>
+      </div>
+    </div>
+    <footer>
+      <div>Bookings & enquiries: <a href="tel:+2347088554786">070 8855 4786</a></div>
+      <nav class="socials" aria-label="Social links">
+        <a href="https://www.instagram.com/youngkellyy.music/" target="_blank" rel="noreferrer">Instagram @youngkellyy.music ↗</a>
+        <a href="https://soundcloud.com/kelvin-ngaji" target="_blank" rel="noreferrer">SoundCloud ↗</a>
+        <a href="https://wa.me/2347088554786" target="_blank" rel="noreferrer">WhatsApp ↗</a>
+      </nav>
+    </footer>
+  </div>
+</body>
+</html>
